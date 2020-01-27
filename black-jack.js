@@ -2,9 +2,9 @@
 // JavaScript Black Jack learning game
 //
 
-let shuffledCards,
-    dealerCards,
-    playerCards;
+let shuffledCards = [],
+    dealerCards = [],
+    playerCards = [];
 
 let gameStart = false;
 
@@ -12,17 +12,30 @@ let dealButton = document.getElementById("play-button");
 let contentArea = document.getElementById("content-area");
 
 dealButton.addEventListener("click", function() {
+    contentArea.innerText = "";
     gameStart = true;
 
     shuffledCards = shufflePlayingCards(createPlayingCards());
-    
+
     // Push 2 cards to each player
     dealerCards.push(shuffledCards.shift());
     dealerCards.push(shuffledCards.shift());
 
     playerCards.push(shuffledCards.shift());
     playerCards.push(shuffledCards.shift());
+
+    displayCards(dealerCards, "Dealer");
+    displayCards(playerCards, "Player");
 });
+
+// Display player cards to content-area
+function displayCards(cards, playerName) {
+    contentArea.innerText += playerName + ": \n";
+    for (let i = 0; i < cards.length; i++) {
+        contentArea.innerText += cards[i].cardName + "\n";
+    }
+    contentArea.innerText += "\n";
+}
 
 // Creates sorted playingCards object array
 function createPlayingCards() {
