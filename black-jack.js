@@ -24,4 +24,14 @@ function createPlayingCards() {
     return playingCards;
 }
 
-console.log(createPlayingCards());
+function shufflePlayingCards(playingCards) {
+    for (let i = 0; i < playingCards.length; i++) {
+        let switchCard = Math.floor(Math.random() * 52);
+        let tempCard = playingCards[i];
+        playingCards[i] = playingCards[switchCard];
+        playingCards[switchCard] = tempCard;
+    }
+    return playingCards;
+}
+
+console.log(shufflePlayingCards(createPlayingCards()));
