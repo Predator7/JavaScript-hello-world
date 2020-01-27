@@ -34,7 +34,17 @@ function displayCards(cards, playerName) {
     for (let i = 0; i < cards.length; i++) {
         contentArea.innerText += cards[i].cardName + "\n";
     }
+    contentArea.innerText += "Total: " + calculateScore(cards) + "\n";
     contentArea.innerText += "\n";
+}
+
+// Calculate cards total score
+function calculateScore(cards) {
+    let score = 0;
+    for (let i = 0; i < cards.length; i++) {
+        score += cards[i].cardValue;
+    }
+    return score;
 }
 
 // Creates sorted playingCards object array
