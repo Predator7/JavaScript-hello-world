@@ -10,8 +10,14 @@ function createPlayingCards() {
     let playingCards = [];
     for (let i = 0; i < values.length; i++) {
         for (let j = 0; j < suites.length; j++) {
+
+            let value = i + 2;
+            if (value > 10) value = 10;
+            if (values[i] === "Ace") value = 11;
+
             playingCards.push({
-                cardName: values[i] + " of " + suites[j]
+                cardName: values[i] + " of " + suites[j],
+                cardValue: value
             });
         }
     }
