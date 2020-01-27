@@ -13,8 +13,12 @@ let contentArea = document.getElementById("content-area");
 
 dealButton.addEventListener("click", function() {
     contentArea.innerText = "";
-    gameStart = true;
+    dealButton.style.display = "none";
+    startGame();
+});
 
+function startGame() {
+    gameStart = true;
     shuffledCards = shufflePlayingCards(createPlayingCards());
 
     // Push 2 cards to each player
@@ -26,7 +30,7 @@ dealButton.addEventListener("click", function() {
 
     displayCards(dealerCards, "Dealer");
     displayCards(playerCards, "Player");
-});
+}
 
 // Display player cards to content-area
 function displayCards(cards, playerName) {
@@ -80,5 +84,3 @@ function shufflePlayingCards(playingCards) {
     }
     return playingCards;
 }
-
-console.log(shufflePlayingCards(createPlayingCards()));
