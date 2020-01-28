@@ -11,14 +11,25 @@ let shuffledCards = [],
 let gameStart = false;
 
 // DOM elements
-let dealButton = document.getElementById("play-button");
+let dealButton = document.getElementById("play-button"),
+    hitButton = document.getElementById("hitme-button"),
+    stayButton = document.getElementById("stay-button");
+
 let contentArea = document.getElementById("content-area");
 
+//
 // Event listeners
+//
+
 dealButton.addEventListener("click", function() {
     contentArea.innerText = "";
     dealButton.style.display = "none";
     startGame();
+});
+
+hitButton.addEventListener("click", function() {
+    playerCards.push(shuffledCards.shift());
+    displayAllCards();
 });
 
 //
