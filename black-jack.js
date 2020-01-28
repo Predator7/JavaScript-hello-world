@@ -34,6 +34,7 @@ dealButton.addEventListener("click", function() {
 hitButton.addEventListener("click", function() {
     playerCards.push(shuffledCards.shift());
     displayAllCards();
+    if (checkForGameOver()) displayGameResult();
 });
 
 //
@@ -63,6 +64,11 @@ function getStartingCards() {
 function checkForGameOver() {
     if (calculateScore(playerCards) === blackJack) {
         playerWins = true;
+        return true;
+    }
+
+    if (calculateScore(playerCards) > blackJack) {
+        playerWins = false;
         return true;
     }
 }
