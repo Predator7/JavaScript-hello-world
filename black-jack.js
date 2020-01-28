@@ -25,6 +25,9 @@ let contentArea = document.getElementById("content-area");
 dealButton.addEventListener("click", function() {
     contentArea.innerText = "";
     dealButton.style.display = "none";
+    hitButton.style.display = "inline";
+    stayButton.style.display = "inline";
+
     startGame();
 });
 
