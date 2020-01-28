@@ -9,8 +9,7 @@ let shuffledCards = [],
 
 // Game options
 const blackJack = 21;
-let gameOver = false,
-    playerWins = false;
+let playerWins = false;
 
 // DOM elements
 let dealButton = document.getElementById("play-button"),
@@ -44,6 +43,8 @@ function startGame() {
 
     getStartingCards();
     displayAllCards();
+
+    if (checkForGameOver()) displayGameResult();
 }
 
 // Push 2 cards to each player
@@ -58,8 +59,8 @@ function getStartingCards() {
 // Checks for game over and decides who won
 function checkForGameOver() {
     if (calculateScore(playerCards) === blackJack) {
-        gameOver = true;
         playerWins = true;
+        return true;
     }
 }
 
@@ -78,6 +79,16 @@ function displayCards(cards, playerName) {
     }
     contentArea.innerText += "Total: " + calculateScore(cards) + "\n";
     contentArea.innerText += "\n";
+}
+
+// Display if you win or lose
+function displayGameResult() {
+    contentArea.innerText += "\n"
+    if (playerWins) {
+        contentArea.innerText += "Congratulations! You win!";
+    } else {
+        contentArea.innerText += "You Lost!";
+    }
 }
 
 // Calculate cards total score
