@@ -8,7 +8,9 @@ let shuffledCards = [],
     playerCards = [];
 
 // Game options
-let gameStart = false;
+const blackJack = 21;
+let gameOver = false,
+    playerWins = false;
 
 // DOM elements
 let dealButton = document.getElementById("play-button"),
@@ -38,9 +40,8 @@ hitButton.addEventListener("click", function() {
 
 // Start game and give each player 2 cards
 function startGame() {
-    gameStart = true;
     shuffledCards = shufflePlayingCards(createPlayingCards());
-    
+
     getStartingCards();
     displayAllCards();
 }
@@ -52,6 +53,14 @@ function getStartingCards() {
 
     playerCards.push(shuffledCards.shift());
     playerCards.push(shuffledCards.shift());
+}
+
+// Checks for game over and decides who won
+function checkForGameOver() {
+    if (calculateScore(playerCards) === blackJack) {
+        gameOver = true;
+        playerWins = true;
+    }
 }
 
 // Display both player and dealer cards
