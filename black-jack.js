@@ -98,6 +98,16 @@ function displayGameResult() {
     } else {
         contentArea.innerText += "You Lost!";
     }
+    endGame();
+}
+
+// Ends Game
+function endGame() {
+    shuffledCards = [], dealerCards = [], playerCards = [];
+
+    dealButton.style.display = "block";
+    hitButton.style.display = "none";
+    stayButton.style.display = "none";
 }
 
 // Calculate cards total score
