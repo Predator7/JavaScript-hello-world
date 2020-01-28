@@ -29,15 +29,18 @@ dealButton.addEventListener("click", function() {
 function startGame() {
     gameStart = true;
     shuffledCards = shufflePlayingCards(createPlayingCards());
-
-    // Push 2 cards to each player
-    dealerCards.push(shuffledCards.shift());
-    dealerCards.push(shuffledCards.shift());
-
-    playerCards.push(shuffledCards.shift());
-    playerCards.push(shuffledCards.shift());
-
+    
+    getStartingCards();
     displayAllCards();
+}
+
+// Push 2 cards to each player
+function getStartingCards() {
+    dealerCards.push(shuffledCards.shift());
+    dealerCards.push(shuffledCards.shift());
+
+    playerCards.push(shuffledCards.shift());
+    playerCards.push(shuffledCards.shift());
 }
 
 // Display both player and dealer cards
