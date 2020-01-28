@@ -37,6 +37,12 @@ function startGame() {
     playerCards.push(shuffledCards.shift());
     playerCards.push(shuffledCards.shift());
 
+    displayAllCards();
+}
+
+// Display both player and dealer cards
+function displayAllCards() {
+    contentArea.innerText = "";
     displayCards(dealerCards, "Dealer");
     displayCards(playerCards, "Player");
 }
