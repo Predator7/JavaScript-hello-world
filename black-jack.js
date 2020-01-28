@@ -2,32 +2,103 @@
 // JavaScript Black Jack learning game
 //
 
+// Global card arrays
 let shuffledCards = [],
     dealerCards = [],
     playerCards = [];
 
-let gameStart = false;
+// Game options
+const blackJack = 21;
+let playerWins = false,
+    stayPressed = false;
 
-let dealButton = document.getElementById("play-button");
+// DOM elements
+let dealButton = document.getElementById("play-button"),
+    hitButton = document.getElementById("hitme-button"),
+    stayButton = document.getElementById("stay-button");
+
 let contentArea = document.getElementById("content-area");
+
+//
+// Event listeners
+//
 
 dealButton.addEventListener("click", function() {
     contentArea.innerText = "";
     dealButton.style.display = "none";
+    hitButton.style.display = "inline";
+    stayButton.style.display = "inline";
+
     startGame();
 });
 
+hitButton.addEventListener("click", function() {
+    playerCards.push(shuffledCards.shift());
+    displayAllCards();
+    if (checkForGameOver()) displayGameResult();
+});
+
+stayButton.addEventListener("click", function() {
+    stayPressed = true;
+    while (calculateScore(playerCards) > calculateScore(dealerCards)) {
+        dealerCards.push(shuffledCards.shift());
+        displayAllCards();
+    }
+    if (checkForGameOver()) displayGameResult();
+});
+
+//
+// Functions
+//
+
+// Start game and give each player 2 cards
 function startGame() {
-    gameStart = true;
     shuffledCards = shufflePlayingCards(createPlayingCards());
 
-    // Push 2 cards to each player
+    getStartingCards();
+    displayAllCards();
+
+    if (checkForGameOver()) displayGameResult();
+}
+
+// Push 2 cards to each player
+function getStartingCards() {
     dealerCards.push(shuffledCards.shift());
     dealerCards.push(shuffledCards.shift());
 
     playerCards.push(shuffledCards.shift());
     playerCards.push(shuffledCards.shift());
+}
 
+// Checks for game over and decides who won
+function checkForGameOver() {
+    if (stayPressed) {
+        if (calculateScore(dealerCards) > blackJack) {
+            playerWins = true;
+            return true;
+        } else if (calculateScore(dealerCards) < calculateScore(playerCards)) {
+            playerWins = true;
+            return true;
+        } else {
+            playerWins = false;
+            return true;
+        }
+    }
+
+    if (calculateScore(playerCards) === blackJack) {
+        playerWins = true;
+        return true;
+    }
+
+    if (calculateScore(playerCards) > blackJack) {
+        playerWins = false;
+        return true;
+    }
+}
+
+// Display both player and dealer cards
+function displayAllCards() {
+    contentArea.innerText = "";
     displayCards(dealerCards, "Dealer");
     displayCards(playerCards, "Player");
 }
@@ -40,6 +111,27 @@ function displayCards(cards, playerName) {
     }
     contentArea.innerText += "Total: " + calculateScore(cards) + "\n";
     contentArea.innerText += "\n";
+}
+
+// Display if you win or lose
+function displayGameResult() {
+    contentArea.innerText += "\n"
+    if (playerWins) {
+        contentArea.innerText += "Congratulations! You win!";
+    } else {
+        contentArea.innerText += "You Lost!";
+    }
+    endGame();
+}
+
+// Ends Game
+function endGame() {
+    shuffledCards = [], dealerCards = [], playerCards = [];
+    playerWins = false, stayPressed = false;
+
+    dealButton.style.display = "block";
+    hitButton.style.display = "none";
+    stayButton.style.display = "none";
 }
 
 // Calculate cards total score
