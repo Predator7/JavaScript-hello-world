@@ -9,7 +9,8 @@ let shuffledCards = [],
 
 // Game options
 const blackJack = 21;
-let playerWins = false;
+let playerWins = false,
+    stayPressed = false;
 
 // DOM elements
 let dealButton = document.getElementById("play-button"),
@@ -34,6 +35,15 @@ dealButton.addEventListener("click", function() {
 hitButton.addEventListener("click", function() {
     playerCards.push(shuffledCards.shift());
     displayAllCards();
+    if (checkForGameOver()) displayGameResult();
+});
+
+stayButton.addEventListener("click", function() {
+    stayPressed = true;
+    while (calculateScore(playerCards) > calculateScore(dealerCards)) {
+        dealerCards.push(shuffledCards.shift());
+        displayAllCards();
+    }
     if (checkForGameOver()) displayGameResult();
 });
 
@@ -62,6 +72,19 @@ function getStartingCards() {
 
 // Checks for game over and decides who won
 function checkForGameOver() {
+    if (stayPressed) {
+        if (calculateScore(dealerCards) > blackJack) {
+            playerWins = true;
+            return true;
+        } else if (calculateScore(dealerCards) < calculateScore(playerCards)) {
+            playerWins = true;
+            return true;
+        } else {
+            playerWins = false;
+            return true;
+        }
+    }
+
     if (calculateScore(playerCards) === blackJack) {
         playerWins = true;
         return true;
@@ -104,6 +127,7 @@ function displayGameResult() {
 // Ends Game
 function endGame() {
     shuffledCards = [], dealerCards = [], playerCards = [];
+    playerWins = false, stayPressed = false;
 
     dealButton.style.display = "block";
     hitButton.style.display = "none";
