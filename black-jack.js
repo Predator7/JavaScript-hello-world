@@ -2,21 +2,30 @@
 // JavaScript Black Jack learning game
 //
 
+// Global card arrays
 let shuffledCards = [],
     dealerCards = [],
     playerCards = [];
 
+// Game options
 let gameStart = false;
 
+// DOM elements
 let dealButton = document.getElementById("play-button");
 let contentArea = document.getElementById("content-area");
 
+// Event listeners
 dealButton.addEventListener("click", function() {
     contentArea.innerText = "";
     dealButton.style.display = "none";
     startGame();
 });
 
+//
+// Functions
+//
+
+// Start game and give each player 2 cards
 function startGame() {
     gameStart = true;
     shuffledCards = shufflePlayingCards(createPlayingCards());
